@@ -11,13 +11,9 @@ public class WonGameOverlay {
     // Shows the end line, to display the winner
     // 8 different positions directions, 2 different players = 16 different possibilities
 
-    public WonGameOverlay(WonBoardPositions winPosition) {
-        // TODO player style?
-        //  colour of player mostly
+    public WonGameOverlay(BoardState state) {
+
     }
 
-//    public static WonGameOverlay fromBoardState(BoardState boardState) {
-////        return new WonGameOverlay(boardState.);
-//    }
 
 }

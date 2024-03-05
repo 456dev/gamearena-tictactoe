@@ -10,16 +10,16 @@ public class TicTacToeGame {
     private Actor player1;
     private Actor player2;
 
-    private BoardState currentBoardState;
+    private BoardState currentBoardState = new BoardState();
 
-    private GameState gameState;
+    private GameState gameState = GameState.INITAL;
 
-    private boolean isPlayer1Turn;
+    private boolean isPlayer1Turn = true;
 
-    private int msInGame; // TODO better time tracking?
+    private int msInGame = 0; // TODO better time tracking?
 
 
-    private boolean gamePaused;
+    private boolean gamePaused = false;
 
     public Actor getCurrentPlayer() {
         return isPlayer1Turn ? player1 : player2;
