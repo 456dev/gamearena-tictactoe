@@ -18,7 +18,15 @@ public class TicTacToeGame {
 
     private boolean isPlayer1Turn = true;
 
-    private int msInGame = 0; // TODO better time tracking?
+    // TODO time tracking
+    //  last unpause time
+    //  total time in game
+    //  on pause -> get difference between now and last unpause time, add to total time
+    //  on unpause -> set last unpause time to now
+    //  on end, trigger pause? or manually stop timer?
+    //  on first move start timer. (even though it's not paused.)
+
+    private int msInGame = 0;
 
 
     private boolean gamePaused = false;

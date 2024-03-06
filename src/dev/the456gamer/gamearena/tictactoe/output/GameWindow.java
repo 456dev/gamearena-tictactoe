@@ -55,9 +55,6 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
 
         window.setJMenuBar(menuBar.getMenuBar());
 
-        window.pack();
-        window.setMinimumSize(window.getSize());
-
         grid = new GameGrid(this);
 
         pausedText = new PausedText(this);
@@ -66,10 +63,12 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
         gameStateText = new GameStateText(this);
         timerText = new TimerText(this);
 
+        window.pack();
+        window.setMinimumSize(window.getSize());
+        window.setLocationRelativeTo(null);
         window.setVisible(true);
 
         resetGame();
-
 
         // final refresh to finish updating layout (font context isnt avalible until after first couple of draws?
 
