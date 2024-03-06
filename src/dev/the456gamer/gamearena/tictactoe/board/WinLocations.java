@@ -1,6 +1,6 @@
 package dev.the456gamer.gamearena.tictactoe.board;
 
-public enum WonBoardPositions {
+public enum WinLocations {
 
     // Horizontal
     TOP_ROW,

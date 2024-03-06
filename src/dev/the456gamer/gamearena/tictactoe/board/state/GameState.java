@@ -1,10 +1,10 @@
 package dev.the456gamer.gamearena.tictactoe.board.state;
 
 public enum GameState {
-    INITAL,
+    INITIAL,
     IN_PROGRESS,
     DRAW,
-    PLAYER1_WON,
-    PLAYER2_WON,
+    X_WON,
+    O_WON,
 
 }

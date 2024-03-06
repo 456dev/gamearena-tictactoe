@@ -1,18 +1,20 @@
 package dev.the456gamer.gamearena.tictactoe;
 
+import dev.the456gamer.gamearena.tictactoe.actortype.ActorMethod;
+import dev.the456gamer.gamearena.tictactoe.actortype.AiActorMethod;
+import dev.the456gamer.gamearena.tictactoe.actortype.HumanActorMethod;
 import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
+import dev.the456gamer.gamearena.tictactoe.board.state.GameSide;
 import dev.the456gamer.gamearena.tictactoe.board.state.GameState;
-import dev.the456gamer.gamearena.tictactoe.player.AiActor;
-import dev.the456gamer.gamearena.tictactoe.player.Actor;
 
 public class TicTacToeGame {
 
-    private Actor player1;
-    private Actor player2;
+    private final Actor player1 = new Actor(GameSide.X, new HumanActorMethod(this));
+    private final Actor player2 = new Actor(GameSide.X, new HumanActorMethod(this));
 
     private BoardState currentBoardState = new BoardState();
 
-    private GameState gameState = GameState.INITAL;
+    private GameState gameState = GameState.INITIAL;
 
     private boolean isPlayer1Turn = true;
 
@@ -46,20 +48,30 @@ public class TicTacToeGame {
         return currentBoardState.isInitialState();
     }
 
+    public Actor getPlayerWithSide(GameSide side) {
+        if (player1.getSide() == side) {
+            return player1;
+        }
+        return player2;
+    }
+
+
+
+
     public Actor getPlayer1() {
         return player1;
     }
 
-    public void setPlayer1(Actor player1) {
+    public void setPlayer1(ActorMethod player1) {
         // stop the game if it's running. done so time can be adjusted etc
         if (!this.inIntitalState()) {
             this.pauseGame();
         }
-        // special case for player 1 being an AI, as it would normally start the game immediately.
-        if (this.inIntitalState() && player1 instanceof AiActor) {
+        // special case for gameSide 1 being an AI, as it would normally start the game immediately.
+        if (this.inIntitalState() && player1 instanceof AiActorMethod) {
             this.pauseGame();
         }
-        this.player1 = player1;
+        this.player1.setActiveMethod(player1);
 
     }
 
@@ -67,11 +79,14 @@ public class TicTacToeGame {
         return player2;
     }
 
-    public void setPlayer2(Actor player2) {
+    public void setPlayer2(ActorMethod player2) {
         if (!this.inIntitalState()) {
             this.pauseGame();
         }
-        this.player2 = player2;
+        this.player2.setActiveMethod(player2);
     }
 
+    public BoardState getCurrentBoardState() {
+        return currentBoardState;
+    }
 }

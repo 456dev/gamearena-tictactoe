@@ -1,6 +1,5 @@
 package dev.the456gamer.gamearena.tictactoe.output;
 
-import dev.the456gamer.gamearena.tictactoe.board.WonBoardPositions;
 import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
 import uk.ac.lancaster.gamearena.Line;
 

@@ -1,11 +1,14 @@
-package dev.the456gamer.gamearena.tictactoe.player;
+package dev.the456gamer.gamearena.tictactoe.actortype;
 
-public abstract class AiActor implements Actor {
+import dev.the456gamer.gamearena.tictactoe.TicTacToeGame;
+
+public abstract class AiActorMethod extends BaseActorMethod {
 
     private final String name;
     private final String tooltip;
 
-    public AiActor(String name, String tooltip) {
+    public AiActorMethod(TicTacToeGame game, String name, String tooltip) {
+        super(game);
         this.name = name;
         this.tooltip = tooltip;
     }
@@ -19,7 +22,4 @@ public abstract class AiActor implements Actor {
     public String getName() {
         return name;
     }
-
-    //    getMoveDelay()
-//    setMoveDelay()
 }

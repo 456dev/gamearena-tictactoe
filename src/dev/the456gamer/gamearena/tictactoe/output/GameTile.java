@@ -1,9 +1,71 @@
 package dev.the456gamer.gamearena.tictactoe.output;
 
+import dev.the456gamer.gamearena.tictactoe.actortype.HumanActorMethod;
+import dev.the456gamer.gamearena.tictactoe.board.state.GameSide;
+import dev.the456gamer.gamearena.tictactoe.output.tilemarker.TileMarker;
+import java.awt.event.MouseEvent;
+import uk.ac.lancaster.gamearena.Rectangle;
+
 public class GameTile {
-    // 3 states
-    // empty, p1, p2
-    // 9 instances, for grid
+
+    private final GameWindow gameWindow;
+    private final int x;
+    private final int y;
+    private final Rectangle clickTarget;
+    private TileMarker marker;
+
+    public final int windowXStart, windowYStart, windowXEnd, windowYEnd;
+
+    private GameSide gameSide;
+
+    public GameTile(GameWindow gameWindow, int x, int y) {
+        // bg for a tile? leave blank.
+        windowXStart = 340 + (110 * x);
+        windowYStart = 120 + (110 * y);
+        windowXEnd = windowXStart + 100;
+        windowYEnd = windowYStart + 100;
+        clickTarget = new Rectangle(340 + (110 * x), 120 + (110 * y), 100, 100, "BLACK");
+        gameWindow.arena.addRectangle(clickTarget);
+
+        this.gameWindow = gameWindow;
+        this.x = x;
+        this.y = y;
+    }
+
+
+    public void setPlayer(GameSide gameSide) {
+        if (this.marker != null) {
+            this.marker.removeFromBoard();
+        }
+        // sets the gameSide of the tile
+        this.gameSide = gameSide;
+        if (gameSide != null) {
+            this.marker = TileMarker.createMarker(gameSide, gameWindow, this.x, this.y);
+            this.marker.addToBoard();
+        }
+    }
+
+    public GameSide getPlayer() {
+        return gameSide;
+    }
+
+    public void onMouseClicked(MouseEvent e) {
+        if (!gameWindow.getGame().isGameActive() || gameWindow.getGame().isGamePaused()) {
+            return;
+        }
+        if (gameWindow.getGame().getCurrentPlayer() == null) {
+            return;
+        }
+
+        if (!(gameWindow.getGame().getCurrentPlayer()
+            .getActiveMethod() instanceof HumanActorMethod human)) {
+            return;
+        }
+
+        human.makeMove(x, y);
+    }
+
+    // change displayed
 
 
 }
