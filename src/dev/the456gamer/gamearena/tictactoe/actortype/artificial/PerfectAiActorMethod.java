@@ -10,8 +10,8 @@ import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
  */
 public class PerfectAiActorMethod extends AiActorMethod {
 
-    public PerfectAiActorMethod(TicTacToeGame game) {
-        super(game, "Perfect AI", "An Ai that always plays perfectly");
+    public PerfectAiActorMethod() {
+        super("Perfect AI", "An Ai that always plays perfectly");
     }
 
     @Override

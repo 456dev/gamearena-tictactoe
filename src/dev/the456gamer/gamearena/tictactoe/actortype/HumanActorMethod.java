@@ -14,8 +14,8 @@ public class HumanActorMethod extends BaseActorMethod {
 
     CompletableFuture<GridCoordinate> gridCoordCompletableFuture;
 
-    public HumanActorMethod(TicTacToeGame game) {
-        super(game);
+    public HumanActorMethod() {
+        super();
     }
 
     @Override

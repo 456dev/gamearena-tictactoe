@@ -10,8 +10,8 @@ import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
  */
 public class StupidAiActorMethod extends AiActorMethod {
 
-    public StupidAiActorMethod(TicTacToeGame game) {
-        super(game, "Stupid AI", "An Ai that actively tries to lose the game");
+    public StupidAiActorMethod() {
+        super( "Stupid AI", "An Ai that actively tries to lose the game");
     }
 
     @Override

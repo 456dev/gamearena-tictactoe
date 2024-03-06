@@ -11,8 +11,8 @@ import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
  */
 public class DeterministicRandomActorMethod extends AiActorMethod {
 
-    public DeterministicRandomActorMethod(TicTacToeGame game) {
-        super(game,"Deterministic Random AI", "An seemingly random Ai, with some determinism");
+    public DeterministicRandomActorMethod() {
+        super("Deterministic Random AI", "An seemingly random Ai, with some determinism");
     }
 
     @Override

@@ -6,7 +6,6 @@ import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
 
 /**
  * A Generic GameSide that can make moves in a game.
- * NOTE: must not outlive the game it is associated with
  */
 public interface ActorMethod {
 

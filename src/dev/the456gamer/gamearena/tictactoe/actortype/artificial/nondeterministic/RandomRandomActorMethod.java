@@ -12,8 +12,8 @@ import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
  */
 public class RandomRandomActorMethod extends AiActorMethod {
 
-    public RandomRandomActorMethod(TicTacToeGame game) {
-        super(game, "Random AI", "An Ai that plays random moves, Using non-deterministic RNG");
+    public RandomRandomActorMethod() {
+        super( "Random AI", "An Ai that plays random moves, Using non-deterministic RNG");
     }
 
     @Override

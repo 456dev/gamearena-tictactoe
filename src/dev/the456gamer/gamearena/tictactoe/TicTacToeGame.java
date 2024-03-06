@@ -1,16 +1,16 @@
 package dev.the456gamer.gamearena.tictactoe;
 
 import dev.the456gamer.gamearena.tictactoe.actortype.ActorMethod;
+import dev.the456gamer.gamearena.tictactoe.actortype.ActorTypeStore;
 import dev.the456gamer.gamearena.tictactoe.actortype.AiActorMethod;
-import dev.the456gamer.gamearena.tictactoe.actortype.HumanActorMethod;
 import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
 import dev.the456gamer.gamearena.tictactoe.board.state.GameSide;
 import dev.the456gamer.gamearena.tictactoe.board.state.GameState;
 
 public class TicTacToeGame {
 
-    private final Actor player1 = new Actor(GameSide.X, new HumanActorMethod(this));
-    private final Actor player2 = new Actor(GameSide.X, new HumanActorMethod(this));
+    private final Actor player1 = new Actor(GameSide.X, ActorTypeStore.HUMAN.getActorMethod());
+    private final Actor player2 = new Actor(GameSide.X, ActorTypeStore.HUMAN.getActorMethod());
 
     private BoardState currentBoardState = new BoardState();
 
@@ -62,8 +62,6 @@ public class TicTacToeGame {
         }
         return player2;
     }
-
-
 
 
     public Actor getPlayer1() {

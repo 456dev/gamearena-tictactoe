@@ -7,8 +7,8 @@ public abstract class AiActorMethod extends BaseActorMethod {
     private final String name;
     private final String tooltip;
 
-    public AiActorMethod(TicTacToeGame game, String name, String tooltip) {
-        super(game);
+    public AiActorMethod(String name, String tooltip) {
+        super();
         this.name = name;
         this.tooltip = tooltip;
     }
