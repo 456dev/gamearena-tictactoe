@@ -69,6 +69,8 @@ public class HumanActorMethod extends BaseActorMethod {
     public void makeMove(int x, int y) {
         if (gridCoordCompletableFuture != null && !gridCoordCompletableFuture.isDone()) {
             gridCoordCompletableFuture.complete(new GridCoordinate(x, y));
+        } else {
+            System.out.println("ignoring human move request to (%d,%d), completable future not active".formatted(x,y));
         }
     }
 

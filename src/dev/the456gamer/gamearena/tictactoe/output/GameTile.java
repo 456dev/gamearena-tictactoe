@@ -1,5 +1,8 @@
 package dev.the456gamer.gamearena.tictactoe.output;
 
+import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
+import static java.awt.event.InputEvent.SHIFT_DOWN_MASK;
+
 import dev.the456gamer.gamearena.tictactoe.actortype.HumanActorMethod;
 import dev.the456gamer.gamearena.tictactoe.board.state.GameSide;
 import dev.the456gamer.gamearena.tictactoe.output.tilemarker.TileMarker;
@@ -50,6 +53,20 @@ public class GameTile {
     }
 
     public void onMouseClicked(MouseEvent e) {
+        int onmask = SHIFT_DOWN_MASK;
+        if (((e.getModifiersEx() & (onmask | CTRL_DOWN_MASK)) == onmask)) {
+            if (e.getButton() == 1) {
+                if (getPlayer() != GameSide.X) {
+                    setPlayer(GameSide.X);
+                } else {
+                    setPlayer(GameSide.O);
+                }
+            } else if (e.getButton() == 3) {
+                setPlayer(null);
+            }
+            return;
+        }
+
         if (!gameWindow.getGame().isGameActive() || gameWindow.getGame().isGamePaused()) {
             return;
         }
