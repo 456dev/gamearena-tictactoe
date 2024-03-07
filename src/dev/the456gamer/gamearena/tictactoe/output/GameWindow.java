@@ -125,6 +125,11 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
     }
 
     @Override
+    public void onFirstMove(TicTacToeGame game) {
+        redraw();
+    }
+
+    @Override
     public void onMouseClicked(MouseEvent e) {
         grid.onMouseClicked(e);
     }

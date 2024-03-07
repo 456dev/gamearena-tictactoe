@@ -3,6 +3,7 @@ package dev.the456gamer.gamearena.tictactoe;
 import dev.the456gamer.gamearena.tictactoe.actortype.ActorMethod;
 import dev.the456gamer.gamearena.tictactoe.actortype.ActorTypeStore;
 import dev.the456gamer.gamearena.tictactoe.actortype.AiActorMethod;
+import dev.the456gamer.gamearena.tictactoe.board.Move;
 import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
 import dev.the456gamer.gamearena.tictactoe.board.state.GameSide;
 import dev.the456gamer.gamearena.tictactoe.output.GameEventHandler;
@@ -30,7 +31,7 @@ public class TicTacToeGame {
 
 
     public Duration getTimeInGame() {
-        if (gamePaused) {
+        if (gamePaused || inInitialState()) {
             return timeInGame;
         }
         Duration timeInGame = Duration.between(lastUnpauseTime, Instant.now());
@@ -48,6 +49,9 @@ public class TicTacToeGame {
 
     public void pauseGame() {
         gamePaused = true;
+        if (inInitialState()) {
+            return;
+        }
         Duration timeInGame = Duration.between(lastUnpauseTime, Instant.now());
         this.timeInGame = this.timeInGame.plus(timeInGame);
         gameEventHandler.onPause(this);
@@ -68,7 +72,7 @@ public class TicTacToeGame {
     }
 
 
-    public boolean inIntitalState() {
+    public boolean inInitialState() {
         return currentBoardState.isInitialState();
     }
 
@@ -86,11 +90,11 @@ public class TicTacToeGame {
 
     public void setPlayer1(ActorMethod player1) {
         // stop the game if it's running. done so time can be adjusted etc
-        if (!this.inIntitalState() && !this.isGamePaused()) {
+        if (!this.inInitialState() && !this.isGamePaused()) {
             this.pauseGame();
         }
         // special case for gameSide 1 being an AI, as it would normally start the game immediately.
-        if (this.inIntitalState() && player1 instanceof AiActorMethod && !this.isGamePaused()) {
+        if (this.inInitialState() && player1 instanceof AiActorMethod && !this.isGamePaused()) {
             this.pauseGame();
         }
         this.player1.setActiveMethod(player1);
@@ -102,7 +106,7 @@ public class TicTacToeGame {
     }
 
     public void setPlayer2(ActorMethod player2) {
-        if (!this.inIntitalState() && !this.isGamePaused()) {
+        if (!this.inInitialState() && !this.isGamePaused()) {
             this.pauseGame();
         }
         this.player2.setActiveMethod(player2);
@@ -110,5 +114,13 @@ public class TicTacToeGame {
 
     public BoardState getCurrentBoardState() {
         return currentBoardState;
+    }
+
+    public void move(Move move) {
+        if (inInitialState()) {
+            gameEventHandler.onFirstMove(this);
+            lastUnpauseTime = Instant.now();
+        }
+        this.currentBoardState = currentBoardState.withMove(move);
     }
 }

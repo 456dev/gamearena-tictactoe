@@ -7,4 +7,6 @@ public interface GameEventHandler {
     void onPause(TicTacToeGame game);
     void onResume(TicTacToeGame game);
 
+    void onFirstMove(TicTacToeGame game);
+
 }
