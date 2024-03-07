@@ -10,13 +10,21 @@ import dev.the456gamer.gamearena.tictactoe.board.state.GameState;
 public class TicTacToeGame {
 
     private final Actor player1 = new Actor(GameSide.X, ActorTypeStore.HUMAN.getActorMethod());
-    private final Actor player2 = new Actor(GameSide.X, ActorTypeStore.HUMAN.getActorMethod());
+    private final Actor player2 = new Actor(GameSide.O, ActorTypeStore.HUMAN.getActorMethod());
 
     private BoardState currentBoardState = new BoardState();
 
     private GameState gameState = GameState.INITIAL;
 
     private boolean isPlayer1Turn = true;
+
+    public boolean isPlayer1Turn() {
+        return isPlayer1Turn;
+    }
+
+    public void setPlayer1Turn(boolean player1Turn) {
+        isPlayer1Turn = player1Turn;
+    }
 
     // TODO time tracking
     //  last unpause time
