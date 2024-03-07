@@ -14,16 +14,8 @@ public class TicTacToeGame {
 
     private BoardState currentBoardState = new BoardState();
 
-    private GameState gameState = GameState.INITIAL;
-
-    private boolean isPlayer1Turn = true;
-
     public boolean isPlayer1Turn() {
-        return isPlayer1Turn;
-    }
-
-    public void setPlayer1Turn(boolean player1Turn) {
-        isPlayer1Turn = player1Turn;
+        return getCurrentBoardState().getSideToMove() == GameSide.X;
     }
 
     // TODO time tracking
@@ -40,7 +32,7 @@ public class TicTacToeGame {
     private boolean gamePaused = false;
 
     public Actor getCurrentPlayer() {
-        return isPlayer1Turn ? player1 : player2;
+        return isPlayer1Turn() ? player1 : player2;
     }
 
     public void pauseGame() {
