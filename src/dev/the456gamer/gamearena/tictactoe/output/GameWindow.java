@@ -58,7 +58,6 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
         grid = new GameGrid(this);
 
         pausedText = new PausedText(this);
-        pausedText.show();
 
         gameStateText = new GameStateText(this);
         timerText = new TimerText(this);
@@ -86,7 +85,7 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
      * resets the game to a new game
      */
     public void resetGame() {
-        game = new TicTacToeGame();
+        game = new TicTacToeGame(this);
         redraw();
 
     }
@@ -109,13 +108,13 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
     }
 
     @Override
-    public void onPause() {
+    public void onPause(TicTacToeGame game) {
         pausedText.show();
 
     }
 
     @Override
-    public void onResume() {
+    public void onResume(TicTacToeGame game) {
         pausedText.hide();
 
     }

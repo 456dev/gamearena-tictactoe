@@ -8,6 +8,7 @@ import dev.the456gamer.gamearena.tictactoe.board.state.GameSide;
 import dev.the456gamer.gamearena.tictactoe.output.GameWindow;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -17,9 +18,6 @@ import javax.swing.JMenuItem;
  * each game gameSide
  * <p>
  * should allow selecting between each class type show id, hover text config ai move delay
- * <p>
- * TODO highlight while its that players turn
- *  draw icon ●, 🔴, ○, ⬤, ⭘ 🔵
  */
 // symbol pair? ⭕❌
 public class PlayerSelectMenu {
@@ -31,7 +29,8 @@ public class PlayerSelectMenu {
     private final List<PlayerSelectItem> selectablePlayers = new ArrayList<>();
     private final JMenu aiDelayMenu;
 
-    public PlayerSelectMenu(GameWindow window, GameSide side) {
+    public PlayerSelectMenu(GameWindow window, GameSide side,
+        Consumer<ActorMethod> actorMethodSetter) {
         this.window = window;
         this.side = side;
         // only null until first update, then never after (hopefully)
@@ -45,8 +44,10 @@ public class PlayerSelectMenu {
             selectablePlayers.add(item);
             menu.add(item.getMenuItem());
             item.getMenuItem().addActionListener(e -> {
-                this.getActor().setActiveMethod(item.getMethod().getActorMethod());
-                refresh();
+                // trust that its setup right.
+                actorMethodSetter.accept(item.getMethod().getActorMethod());
+                // larger scope, it needs to redraw the pause button
+                window.redraw();
             });
             radioGroup.add(item.getMenuItem());
         }

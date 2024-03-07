@@ -19,12 +19,13 @@ public class MenuBar {
         this.gameWindow = gameWindow;
         menuBar = new JMenuBar();
 
-        XPlayerSelectMenu = new PlayerSelectMenu(gameWindow, GameSide.X);
+        XPlayerSelectMenu = new PlayerSelectMenu(gameWindow, GameSide.X,
+            player1 -> gameWindow.getGame().setPlayer1(player1));
         menuBar.add(XPlayerSelectMenu.getMenu());
-        OPlayerSelectMenu = new PlayerSelectMenu(gameWindow, GameSide.O);
+        OPlayerSelectMenu = new PlayerSelectMenu(gameWindow, GameSide.O,
+            player2 -> gameWindow.getGame().setPlayer2(player2));
         menuBar.add(OPlayerSelectMenu.getMenu());
         menuBar.add(Box.createHorizontalGlue());
-
 
         JMenu actionsMenu = new JMenu("Actions");
         actionsMenu.setToolTipText("More Actions? Yes Please.");
@@ -33,7 +34,6 @@ public class MenuBar {
         quitAction.setToolTipText("Quit the game");
         quitAction.addActionListener(e -> System.exit(0));
         actionsMenu.add(quitAction);
-
 
         // pause game action
         pauseAction = new PauseGameActionButton(gameWindow);
@@ -47,10 +47,6 @@ public class MenuBar {
         menuBar.add(actionsMenu);
 
         JMenu debugMenu = new JMenu("Debug");
-
-        JMenuItem swapActivePlayerAction = new JMenuItem("swap active player");
-        swapActivePlayerAction.addActionListener(e -> gameWindow.getGame().setPlayer1Turn(!gameWindow.getGame().isPlayer1Turn()));
-        debugMenu.add(swapActivePlayerAction);
 
         JMenuItem refreshAction = new JMenuItem("Redraw");
         refreshAction.addActionListener(e -> gameWindow.redraw());

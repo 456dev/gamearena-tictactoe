@@ -5,9 +5,15 @@ import dev.the456gamer.gamearena.tictactoe.actortype.ActorTypeStore;
 import dev.the456gamer.gamearena.tictactoe.actortype.AiActorMethod;
 import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
 import dev.the456gamer.gamearena.tictactoe.board.state.GameSide;
-import dev.the456gamer.gamearena.tictactoe.board.state.GameState;
+import dev.the456gamer.gamearena.tictactoe.output.GameEventHandler;
 
 public class TicTacToeGame {
+
+    private final GameEventHandler gameEventHandler;
+
+    public TicTacToeGame(GameEventHandler gameEventHandler) {
+        this.gameEventHandler = gameEventHandler;
+    }
 
     private final Actor player1 = new Actor(GameSide.X, ActorTypeStore.HUMAN.getActorMethod());
     private final Actor player2 = new Actor(GameSide.O, ActorTypeStore.HUMAN.getActorMethod());
@@ -37,10 +43,12 @@ public class TicTacToeGame {
 
     public void pauseGame() {
         gamePaused = true;
+        gameEventHandler.onPause(this);
     }
 
     public void resumeGame() {
         gamePaused = false;
+        gameEventHandler.onResume(this);
     }
 
     public boolean isGamePaused() {
