@@ -15,6 +15,9 @@ public enum GameSide {
 
     GameSide(String symbol) {
         this.symbol = symbol;
+    }
 
+    public GameSide getOpponent() {
+        return this == X ? O : X;
     }
 }
