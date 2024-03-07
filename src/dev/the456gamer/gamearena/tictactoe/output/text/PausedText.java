@@ -25,10 +25,12 @@ public class PausedText {
 
     public void show() {
         text.setColour("WHITE");
-        gameWindow.arena.addText(text);
+
         if (task != null) {
             task.cancel();
         }
+        gameWindow.arena.removeText(text);
+        gameWindow.arena.addText(text);
         task = new TimerTask() {
             @Override
             public void run() {
@@ -44,8 +46,11 @@ public class PausedText {
     }
 
     public void hide() {
+        if (task != null) {
+            task.cancel();
+        }
         gameWindow.arena.removeText(text);
-        task.cancel();
+
         task = null;
 
     }
