@@ -6,6 +6,8 @@ import dev.the456gamer.gamearena.tictactoe.actortype.AiActorMethod;
 import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
 import dev.the456gamer.gamearena.tictactoe.board.state.GameSide;
 import dev.the456gamer.gamearena.tictactoe.output.GameEventHandler;
+import java.time.Duration;
+import java.time.Instant;
 
 public class TicTacToeGame {
 
@@ -24,15 +26,18 @@ public class TicTacToeGame {
         return getCurrentBoardState().getSideToMove() == GameSide.X;
     }
 
-    // TODO time tracking
-    //  last unpause time
-    //  total time in game
-    //  on pause -> get difference between now and last unpause time, add to total time
-    //  on unpause -> set last unpause time to now
-    //  on end, trigger pause? or manually stop timer?
-    //  on first move start timer. (even though it's not paused.)
+    private Instant lastUnpauseTime = Instant.now();
 
-    private int msInGame = 0;
+
+    public Duration getTimeInGame() {
+        if (gamePaused) {
+            return timeInGame;
+        }
+        Duration timeInGame = Duration.between(lastUnpauseTime, Instant.now());
+        return this.timeInGame.plus(timeInGame);
+    }
+
+    private Duration timeInGame = Duration.ZERO;
 
 
     private boolean gamePaused = false;
@@ -43,11 +48,14 @@ public class TicTacToeGame {
 
     public void pauseGame() {
         gamePaused = true;
+        Duration timeInGame = Duration.between(lastUnpauseTime, Instant.now());
+        this.timeInGame = this.timeInGame.plus(timeInGame);
         gameEventHandler.onPause(this);
     }
 
     public void resumeGame() {
         gamePaused = false;
+        lastUnpauseTime = Instant.now();
         gameEventHandler.onResume(this);
     }
 
@@ -78,11 +86,11 @@ public class TicTacToeGame {
 
     public void setPlayer1(ActorMethod player1) {
         // stop the game if it's running. done so time can be adjusted etc
-        if (!this.inIntitalState()) {
+        if (!this.inIntitalState() && !this.isGamePaused()) {
             this.pauseGame();
         }
         // special case for gameSide 1 being an AI, as it would normally start the game immediately.
-        if (this.inIntitalState() && player1 instanceof AiActorMethod) {
+        if (this.inIntitalState() && player1 instanceof AiActorMethod && !this.isGamePaused()) {
             this.pauseGame();
         }
         this.player1.setActiveMethod(player1);
@@ -94,7 +102,7 @@ public class TicTacToeGame {
     }
 
     public void setPlayer2(ActorMethod player2) {
-        if (!this.inIntitalState()) {
+        if (!this.inIntitalState() && !this.isGamePaused()) {
             this.pauseGame();
         }
         this.player2.setActiveMethod(player2);

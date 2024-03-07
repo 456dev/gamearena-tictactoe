@@ -36,8 +36,6 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
     public GameWindow() {
         window = new JFrame("GameArena Tic Tac Toe");
 
-//        window.setMinimumSize(new Dimension(1000, 500));
-
         arena = new CustomGameArena(1000, 500, false, this);
         arena.setSize(1000, 500);
         arena.setMinimumSize(new Dimension(1000, 500));
@@ -69,7 +67,7 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
 
         resetGame();
 
-        // final refresh to finish updating layout (font context isnt avalible until after first couple of draws?
+        // final refresh to finish updating layout (font context isn't available until after first a couple of draws?
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -78,7 +76,12 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
                 redraw();
             }
         }, 50);
-
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                timerText.refresh();
+            }
+        }, 100, 55);
     }
 
     /**
@@ -94,7 +97,6 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
         gameStateText.update();
         grid.drawBoardState(game.getCurrentBoardState());
         menuBar.refresh();
-
     }
 
 
@@ -109,12 +111,15 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
 
     @Override
     public void onPause(TicTacToeGame game) {
+        timerText.refresh();
         pausedText.show();
+
 
     }
 
     @Override
     public void onResume(TicTacToeGame game) {
+        timerText.refresh();
         pausedText.hide();
 
     }

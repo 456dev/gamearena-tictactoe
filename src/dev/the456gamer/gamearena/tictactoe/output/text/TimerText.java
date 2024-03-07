@@ -14,7 +14,10 @@ public class TimerText {
         window.arena.addText(text);
     }
 
-
+    public void refresh() {
+        text.setText("Timer: %d.%03d".formatted(window.getGame().getTimeInGame().toSeconds(),
+            window.getGame().getTimeInGame().toMillis() % 1000));
+    }
 
 
 }
