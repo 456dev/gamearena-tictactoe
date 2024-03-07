@@ -1,7 +1,6 @@
 package dev.the456gamer.gamearena.tictactoe.actortype.artificial.nondeterministic;
 
 
-import dev.the456gamer.gamearena.tictactoe.TicTacToeGame;
 import dev.the456gamer.gamearena.tictactoe.actortype.AiActorMethod;
 import dev.the456gamer.gamearena.tictactoe.board.Move;
 import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
@@ -13,7 +12,7 @@ import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
 public class RandomRandomActorMethod extends AiActorMethod {
 
     public RandomRandomActorMethod() {
-        super( "Random AI", "An Ai that plays random moves, Using non-deterministic RNG");
+        super("Random AI", "An Ai that plays random moves, Using non-deterministic RNG");
     }
 
     @Override
