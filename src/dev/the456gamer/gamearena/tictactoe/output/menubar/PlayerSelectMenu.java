@@ -103,7 +103,8 @@ public class PlayerSelectMenu {
 
     public void refresh() {
         setActor(window.getGame().getPlayerWithSide(side));
-        menu.setText(side.getSymbol() + ": " + (actor.getActiveMethod() instanceof AiActorMethod ?
+        menu.setText((actor.getSide() == window.getGame().getCurrentPlayer().getSide() ? "╭" : " ")
+            + side.getSymbol() + ": " + (actor.getActiveMethod() instanceof AiActorMethod ?
             actor.getMoveDelay() + "ms delay then " : "") + actor.getActiveMethod().getName());
         menu.setToolTipText(actor.getActiveMethod().getTooltip());
         aiDelayMenu.setText("AI Move Delay: " + actor.getMoveDelay() + "ms");
