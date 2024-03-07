@@ -2,12 +2,13 @@ package dev.the456gamer.gamearena.tictactoe.board.state;
 
 import dev.the456gamer.gamearena.tictactoe.board.Move;
 import dev.the456gamer.gamearena.tictactoe.board.WinLocations;
+import dev.the456gamer.gamearena.tictactoe.board.WinLocations.WinLocationType;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BoardState {
 
+    private final GameSide sideToMove;
     private GameState gameState;
     private final List<Move> validMoves = new ArrayList<>(9);
     private boolean calculatedMoves = false;
@@ -17,19 +18,14 @@ public class BoardState {
     private final GameSide[][] board;
 
     public BoardState() {
-        this(new GameSide[3][3]);
+        this(new GameSide[3][3], GameSide.X);
         inital = true;
     }
 
-    private BoardState(GameSide[][] backingList) {
+    private BoardState(GameSide[][] backingList, GameSide sideToMove) {
         board = backingList;
+        this.sideToMove = sideToMove;
     }
-
-    // todo figure out representation of the 9 cells
-    //  metadata needed: if there is a tile on there? which gameSide's tile is it?.
-    //  that should be it. ActiveBoardState has the play() method that will be used to create a new the board state.
-    //  with the new move made by the gameSide added.
-
 
     public GameState getGameState() {
         if (gameState == null) {
@@ -43,20 +39,59 @@ public class BoardState {
         if (inital) {
             return GameState.INITIAL;
         }
-        // TODO
-        // check win
-        //  3 in a row *3
-        //  3 in a column *3
-        //  3 in a diagonal *2
-        // this should set wonBoardPosition too
 
-        // check draw
-        //  if no more moves can be made
+        for (int i = 0; i < 3; i++) {
+            if (board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
+                if (board[i][0] != null) {
+                    wonBoardPosition = WinLocations.getWinLocation(WinLocationType.COLUMN, i);
+                    return board[i][0] == GameSide.X ? GameState.X_WON : GameState.O_WON;
+                }
+            }
+            if (board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
+                if (board[0][i] != null) {
+                    wonBoardPosition = WinLocations.getWinLocation(WinLocationType.ROW, i);
+                    return board[0][i] == GameSide.X ? GameState.X_WON : GameState.O_WON;
+                }
+            }
+        }
 
-        // if none of the above, then the game is still in progress
+        if (board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
+            if (board[0][0] != null) {
+                wonBoardPosition = WinLocations.getWinLocation(WinLocationType.DIAGONAL, 0);
+                return board[0][0] == GameSide.X ? GameState.X_WON : GameState.O_WON;
+            }
+        }
 
-        // this is the same for every identical board state, so we can cache it.
+        if (board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+            if (board[0][2] != null) {
+                wonBoardPosition = WinLocations.getWinLocation(WinLocationType.DIAGONAL, 1);
+                return board[0][2] == GameSide.X ? GameState.X_WON : GameState.O_WON;
+            }
+        }
+
+        boolean boardFull = true, boardEmpty = true;
+
+        for (GameSide[] row : board) {
+            for (GameSide tile : row) {
+                if (tile == null) {
+                    boardFull = false;
+                } else {
+                    boardEmpty = false;
+                }
+            }
+        }
+
+        if (boardFull) {
+            return GameState.DRAW;
+        }
+
+        if (boardEmpty) {
+            inital = true;
+            return GameState.INITIAL;
+        }
+
         return GameState.IN_PROGRESS;
+
     }
 
     public List<Move> getValidMoves() {
@@ -68,8 +103,17 @@ public class BoardState {
     }
 
     private List<Move> calculateValidMoves() {
-        // TODO
-        return Collections.emptyList();
+        List<Move> validMoves = new ArrayList<>(9);
+
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
+                if (board[x][y] == null) {
+                    validMoves.add(new Move(sideToMove, x, y, this));
+                }
+            }
+        }
+
+        return validMoves;
     }
 
     public boolean isTerminal() {
@@ -97,10 +141,14 @@ public class BoardState {
         GameSide[][] backingList = board.clone();
         backingList[move.x][move.x] = move.gameSide;
 
-        return new BoardState(backingList);
+        return new BoardState(backingList, move.gameSide == GameSide.X ? GameSide.O : GameSide.X);
     }
 
     public GameSide getTileState(int x, int y) {
         return board[x][y];
+    }
+
+    public GameSide getSideToMove() {
+        return sideToMove;
     }
 }
