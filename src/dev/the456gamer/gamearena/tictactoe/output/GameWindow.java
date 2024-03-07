@@ -42,8 +42,7 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
         arena.setPreferredSize(new Dimension(1000, 500));
         arena.setMaximumSize(new Dimension(1000, 500));
 
-        window.setDefaultCloseOperation(
-            WindowConstants.EXIT_ON_CLOSE);
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         window.setContentPane(arena);
 
@@ -97,6 +96,12 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
         gameStateText.update();
         grid.drawBoardState(game.getCurrentBoardState());
         menuBar.refresh();
+        if (game.isGamePaused()) {
+            pausedText.show();
+        } else {
+            pausedText.hide();
+        }
+        timerText.refresh();
     }
 
 
@@ -111,17 +116,12 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
 
     @Override
     public void onPause(TicTacToeGame game) {
-        timerText.refresh();
-        pausedText.show();
-
-
+        redraw();
     }
 
     @Override
     public void onResume(TicTacToeGame game) {
-        timerText.refresh();
-        pausedText.hide();
-
+        redraw();
     }
 
     @Override
