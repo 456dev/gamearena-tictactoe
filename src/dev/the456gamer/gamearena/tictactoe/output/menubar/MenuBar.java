@@ -46,6 +46,18 @@ public class MenuBar {
 
         menuBar.add(actionsMenu);
 
+        JMenu debugMenu = new JMenu("Debug");
+
+        JMenuItem swapActivePlayerAction = new JMenuItem("swap active player");
+        swapActivePlayerAction.addActionListener(e -> gameWindow.getGame().setPlayer1Turn(!gameWindow.getGame().isPlayer1Turn()));
+        debugMenu.add(swapActivePlayerAction);
+
+        JMenuItem refreshAction = new JMenuItem("Redraw");
+        refreshAction.addActionListener(e -> gameWindow.redraw());
+        debugMenu.add(refreshAction);
+
+        menuBar.add(debugMenu);
+
     }
 
     public JMenuBar getMenuBar() {
