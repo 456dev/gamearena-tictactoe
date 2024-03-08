@@ -7,11 +7,13 @@ import dev.the456gamer.gamearena.tictactoe.actortype.AiActorMethod;
 import dev.the456gamer.gamearena.tictactoe.board.state.GameSide;
 import dev.the456gamer.gamearena.tictactoe.output.GameWindow;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 
 /**
  * a menu for selecting how a gameSide is controlled 2 instances of this should be created, one for
@@ -60,16 +62,22 @@ public class PlayerSelectMenu {
         }
 
         aiDelayMenu = new JMenu("AI Move Delay: 0ms");
-        for (int i : new int[]{0, 1, 2, 5, 10, 20, 50, 100}) {
-            int delay = i * 10;
-            JMenuItem item = new JMenuItem(delay + "ms");
+        Map<Integer, JRadioButtonMenuItem> delayButtons = new HashMap<>();
+        ButtonGroup aiDelayGroup = new ButtonGroup();
+        for (int delay : new int[]{0, 10, 20, 50, 100, 200, 500, 1000}) {
+            JRadioButtonMenuItem item = new JRadioButtonMenuItem(delay + "ms");
             item.addActionListener(e -> {
                 this.setAiMoveDelay(delay);
                 aiDelayMenu.setText("AI Move Delay: " + delay + "ms");
                 refresh();
             });
+            aiDelayGroup.add(item);
             aiDelayMenu.add(item);
+            delayButtons.put(delay, item);
         }
+
+        delayButtons.getOrDefault(100, delayButtons.entrySet().stream().findAny().orElseThrow()
+            .getValue()).setSelected(true);
 
         menu.add(aiDelayMenu);
 

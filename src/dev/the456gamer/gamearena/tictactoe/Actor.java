@@ -14,9 +14,9 @@ public class Actor {
         this.activeMethod = activeMethod;
     }
 
-    private GameSide side;
+    private final GameSide side;
     private ActorMethod activeMethod;
-    private int moveDelay;
+    private int moveDelay = 100;
 
     public ActorMethod getActiveMethod() {
         return activeMethod;
