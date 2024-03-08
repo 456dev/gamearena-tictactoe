@@ -139,7 +139,7 @@ public class BoardState {
         }
 
         GameSide[][] backingList = board.clone();
-        backingList[move.x][move.x] = move.gameSide;
+        backingList[move.x][move.y] = move.gameSide;
 
         return new BoardState(backingList, move.gameSide == GameSide.X ? GameSide.O : GameSide.X);
     }

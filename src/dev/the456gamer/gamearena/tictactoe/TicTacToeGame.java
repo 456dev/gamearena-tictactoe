@@ -31,7 +31,7 @@ public class TicTacToeGame {
 
 
     public Duration getTimeInGame() {
-        if (gamePaused || inInitialState()) {
+        if (gamePaused || inInitialState() || !isGameActive()) {
             return timeInGame;
         }
         Duration timeInGame = Duration.between(lastUnpauseTime, Instant.now());
@@ -48,13 +48,25 @@ public class TicTacToeGame {
     }
 
     public void pauseGame() {
-        gamePaused = true;
-        if (inInitialState()) {
+        if (!isGameActive()) {
+            // game is over, no need to pause
             return;
         }
+
+        gamePaused = true;
+
+        if (inInitialState()) {
+            gameEventHandler.onPause(this);
+            return;
+        }
+        storeTime();
+        gameEventHandler.onPause(this);
+    }
+
+    private void storeTime() {
+        // todo should i ensure its only called when game is active (to avoid time being added from when game is paused)
         Duration timeInGame = Duration.between(lastUnpauseTime, Instant.now());
         this.timeInGame = this.timeInGame.plus(timeInGame);
-        gameEventHandler.onPause(this);
     }
 
     public void resumeGame() {
@@ -117,10 +129,24 @@ public class TicTacToeGame {
     }
 
     public void move(Move move) {
+        if (isGamePaused() || !isGameActive()) {
+            return;
+        }
+
+        try {
+            currentBoardState = currentBoardState.withMove(move);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Move is invalid: ignoring");
+            return;
+        }
+
         if (inInitialState()) {
             gameEventHandler.onFirstMove(this);
             lastUnpauseTime = Instant.now();
         }
-        this.currentBoardState = currentBoardState.withMove(move);
+        if (!isGameActive()) {
+            storeTime();
+            gameEventHandler.onGameEnd(this);
+        }
     }
 }

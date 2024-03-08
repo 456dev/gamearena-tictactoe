@@ -3,6 +3,9 @@ package dev.the456gamer.gamearena.tictactoe.output;
 import dev.the456gamer.gamearena.CustomArenaEvents;
 import dev.the456gamer.gamearena.CustomGameArena;
 import dev.the456gamer.gamearena.tictactoe.TicTacToeGame;
+import dev.the456gamer.gamearena.tictactoe.actortype.ActorMethod;
+import dev.the456gamer.gamearena.tictactoe.actortype.AiActorMethod;
+import dev.the456gamer.gamearena.tictactoe.board.Move;
 import dev.the456gamer.gamearena.tictactoe.output.menubar.MenuBar;
 import dev.the456gamer.gamearena.tictactoe.output.text.GameStateText;
 import dev.the456gamer.gamearena.tictactoe.output.text.PausedText;
@@ -12,6 +15,7 @@ import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeoutException;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 import uk.ac.lancaster.gamearena.GameArena;
@@ -81,6 +85,47 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
                 timerText.refresh();
             }
         }, 100, 55);
+
+    }
+
+
+    public void startPlaying() {
+        // take input from _current_ player -> can be swapped mid game
+
+        while (true) { // todo quit without this?
+            // ensure latest game state: resetting = new game.
+            TicTacToeGame game = this.getGame();
+
+            if (game.isGamePaused() || !game.isGameActive()) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    System.out.println("interrupted, " + e.getMessage());
+                }
+                continue;
+            }
+
+            // ensure currentplayer and active method stay the same after the thread sleep
+            ActorMethod activeMethod = game.getCurrentPlayer().getActiveMethod();
+            if (activeMethod instanceof AiActorMethod) {
+                try {
+                    // TODO ensure this keeps working. swap to new thread to handle player moves?
+                    Thread.sleep(game.getCurrentPlayer().getMoveDelay());
+                } catch (InterruptedException e) {
+                    System.out.println("interrupted, " + e.getMessage());
+                }
+            }
+
+            Move move;
+            try {
+                move = activeMethod.getNextMove(game.getCurrentBoardState());
+            } catch (TimeoutException e) {
+//                System.out.println("move not ready yet");
+                continue;
+            }
+            game.move(move);
+            redraw();
+        }
     }
 
     /**
@@ -127,6 +172,12 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
     @Override
     public void onFirstMove(TicTacToeGame game) {
         redraw();
+    }
+
+    @Override
+    public void onGameEnd(TicTacToeGame game) {
+        redraw();
+
     }
 
     @Override

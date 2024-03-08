@@ -53,6 +53,7 @@ public class GameTile {
     }
 
     public void onMouseClicked(MouseEvent e) {
+
         int onmask = SHIFT_DOWN_MASK;
         if (((e.getModifiersEx() & (onmask | CTRL_DOWN_MASK)) == onmask)) {
             if (e.getButton() == 1) {
@@ -68,14 +69,17 @@ public class GameTile {
         }
 
         if (!gameWindow.getGame().isGameActive() || gameWindow.getGame().isGamePaused()) {
+            System.out.println("ignoring click: Game is not active or is paused");
             return;
         }
         if (gameWindow.getGame().getCurrentPlayer() == null) {
+            System.out.println("ignoring click: No current player");
             return;
         }
 
         if (!(gameWindow.getGame().getCurrentPlayer()
             .getActiveMethod() instanceof HumanActorMethod human)) {
+            System.out.println("ignoring click: Current player is not human");
             return;
         }
 

@@ -7,6 +7,7 @@ public class TicTacToeMain {
 
     public static void main(String[] args) {
         GameWindow instance = new GameWindow();
+        instance.startPlaying();
     }
 
 

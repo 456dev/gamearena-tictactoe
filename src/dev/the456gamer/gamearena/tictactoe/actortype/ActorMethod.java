@@ -3,6 +3,7 @@ package dev.the456gamer.gamearena.tictactoe.actortype;
 
 import dev.the456gamer.gamearena.tictactoe.board.Move;
 import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
+import java.util.concurrent.TimeoutException;
 
 /**
  * A Generic GameSide that can make moves in a game.
@@ -23,7 +24,7 @@ public interface ActorMethod {
      * @param state the current state of the board
      * @return the next move for the gameSide
      */
-    public Move getNextMove(BoardState state);
+    public Move getNextMove(BoardState state) throws TimeoutException;
     
 //    public Actor getBackingActor();
 

@@ -1,6 +1,7 @@
 package dev.the456gamer.gamearena.tictactoe.output;
 
 import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
+import dev.the456gamer.gamearena.tictactoe.board.state.GameSide;
 import java.awt.event.MouseEvent;
 import uk.ac.lancaster.gamearena.Line;
 
@@ -44,8 +45,16 @@ public class GameGrid {
     public void drawBoardState(BoardState boardState) {
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
-                tiles[x][y].setPlayer(boardState.getTileState(x, y));
+                GameSide tileState = boardState.getTileState(x, y);
+//                if (tileState == null) {
+//                    System.out.print(" ");
+//                } else {
+//                    System.out.print(tileState.getSymbol());
+//                }
+
+                tiles[x][y].setPlayer(tileState);
             }
+//            System.out.println();
         }
 
     }

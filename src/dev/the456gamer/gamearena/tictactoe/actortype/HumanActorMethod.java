@@ -1,11 +1,12 @@
 package dev.the456gamer.gamearena.tictactoe.actortype;
 
-import dev.the456gamer.gamearena.tictactoe.TicTacToeGame;
 import dev.the456gamer.gamearena.tictactoe.board.Move;
 import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
 import dev.the456gamer.gamearena.tictactoe.output.GridCoordinate;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * A gameSide that is controlled by a human.
@@ -28,16 +29,17 @@ public class HumanActorMethod extends BaseActorMethod {
         return "A Real Life Player :O";
     }
 
-    private Move fetchValidMove(BoardState state) {
+    private Move fetchValidMove(BoardState state) throws TimeoutException {
         gridCoordCompletableFuture = new CompletableFuture<>();
         GridCoordinate gridCoordinate;
         try {
-            gridCoordinate = gridCoordCompletableFuture.get();
+            gridCoordinate = gridCoordCompletableFuture.get(50, TimeUnit.MILLISECONDS);
         } catch (InterruptedException | ExecutionException e) {
             return null;
         }
         for (Move move : state.getValidMoves()) {
             if (move.x == gridCoordinate.x() && move.y == gridCoordinate.y()) {
+                gridCoordCompletableFuture = null;
                 return move;
             }
         }
@@ -45,7 +47,7 @@ public class HumanActorMethod extends BaseActorMethod {
     }
 
     @Override
-    public Move getNextMove(BoardState state) {
+    public Move getNextMove(BoardState state) throws TimeoutException {
         if (state.getValidMoves().isEmpty()) {
             return null;
         }
@@ -67,10 +69,13 @@ public class HumanActorMethod extends BaseActorMethod {
      * @param y ypos of the grid to move to
      */
     public void makeMove(int x, int y) {
+//        System.out.println("human move request to (%d,%d)".formatted(x,y));
         if (gridCoordCompletableFuture != null && !gridCoordCompletableFuture.isDone()) {
             gridCoordCompletableFuture.complete(new GridCoordinate(x, y));
         } else {
-            System.out.println("ignoring human move request to (%d,%d), completable future not active".formatted(x,y));
+            System.out.println(
+                "ignoring human move request to (%d,%d), completable future not active".formatted(x,
+                    y));
         }
     }
 

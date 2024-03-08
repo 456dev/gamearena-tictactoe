@@ -9,4 +9,6 @@ public interface GameEventHandler {
 
     void onFirstMove(TicTacToeGame game);
 
+    void onGameEnd(TicTacToeGame game);
+
 }
