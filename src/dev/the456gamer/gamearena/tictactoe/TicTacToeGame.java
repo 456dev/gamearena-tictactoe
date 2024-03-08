@@ -66,7 +66,6 @@ public class TicTacToeGame {
     }
 
     private void storeTime() {
-        // todo should i ensure its only called when game is active (to avoid time being added from when game is paused)
         Duration timeInGame = Duration.between(lastUnpauseTime, Instant.now());
         this.timeInGame = this.timeInGame.plus(timeInGame);
     }
