@@ -12,10 +12,10 @@ import java.util.Comparator;
 /**
  * a gameSide that always plays perfectly
  */
-public class PerfectAiActorMethod extends AiActorMethod {
+public class SubPerfectAiActorMethod extends AiActorMethod {
 
-    public PerfectAiActorMethod() {
-        super("Perfect AI", "An Ai that always plays perfectly");
+    public SubPerfectAiActorMethod() {
+        super("Not quite Perfect AI", "An Ai that almost always plays perfectly");
     }
 
     @Override
@@ -30,9 +30,13 @@ public class PerfectAiActorMethod extends AiActorMethod {
         for (Move move : state.getValidMoves()) {
             if (move.getBoardState().getGameState() == (state.getSideToMove() == GameSide.X
                 ? GameState.X_WON : GameState.O_WON)) {
+                System.out.println("Winning move found");
                 return move;
             }
         }
+
+        // TODO doesnt handle case where opponent is 1 move away from wining
+        // cant reasonably look ahead ?
 
         // no winners.
         return state.getValidMoves().stream()

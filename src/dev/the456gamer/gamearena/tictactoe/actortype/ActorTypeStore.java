@@ -1,7 +1,7 @@
 package dev.the456gamer.gamearena.tictactoe.actortype;
 
 import dev.the456gamer.gamearena.tictactoe.actortype.artificial.DeterministicRandomActorMethod;
-import dev.the456gamer.gamearena.tictactoe.actortype.artificial.PerfectAiActorMethod;
+import dev.the456gamer.gamearena.tictactoe.actortype.artificial.SubPerfectAiActorMethod;
 import dev.the456gamer.gamearena.tictactoe.actortype.artificial.StupidAiActorMethod;
 import dev.the456gamer.gamearena.tictactoe.actortype.artificial.TopLeftAiActorMethod;
 import dev.the456gamer.gamearena.tictactoe.actortype.artificial.nondeterministic.RandomRandomActorMethod;
@@ -9,7 +9,7 @@ import dev.the456gamer.gamearena.tictactoe.actortype.artificial.nondeterministic
 public enum ActorTypeStore {
     HUMAN(new HumanActorMethod()),
 
-    PERFECT(new PerfectAiActorMethod()),
+    PERFECT(new SubPerfectAiActorMethod()),
 
     STUPID(new StupidAiActorMethod()),
 

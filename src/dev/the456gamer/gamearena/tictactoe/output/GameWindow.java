@@ -6,6 +6,7 @@ import dev.the456gamer.gamearena.tictactoe.TicTacToeGame;
 import dev.the456gamer.gamearena.tictactoe.actortype.ActorMethod;
 import dev.the456gamer.gamearena.tictactoe.actortype.AiActorMethod;
 import dev.the456gamer.gamearena.tictactoe.board.Move;
+import dev.the456gamer.gamearena.tictactoe.board.state.GameState;
 import dev.the456gamer.gamearena.tictactoe.output.menubar.MenuBar;
 import dev.the456gamer.gamearena.tictactoe.output.text.GameStateText;
 import dev.the456gamer.gamearena.tictactoe.output.text.PausedText;
@@ -33,6 +34,7 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
     private final GameStateText gameStateText;
     private final MenuBar menuBar;
     private final TimerText timerText;
+    private final WonGameOverlay wonGameOverlay;
 
     private TicTacToeGame game;
 
@@ -62,6 +64,7 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
 
         gameStateText = new GameStateText(this);
         timerText = new TimerText(this);
+        wonGameOverlay = new WonGameOverlay(this);
 
         window.pack();
         window.setMinimumSize(window.getSize());
@@ -132,7 +135,17 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
      * resets the game to a new game
      */
     public void resetGame() {
-        game = new TicTacToeGame(this);
+        // TODO this doesnt reset actors -> it should default to human, but instead is current selection
+        //  (good) but doesnt pause (bad?)
+        //  dev.the456gamer.gamearena.tictactoe.output.menubar.PlayerSelectMenu.setActor -> happens in refresh, which is too late.
+        ActorMethod actorMethod = menuBar.getXPlayerSelectMenu().getActiveMethod().getActorMethod();
+        game = new TicTacToeGame(this,
+            actorMethod,
+            menuBar.getOPlayerSelectMenu().getActiveMethod().getActorMethod());
+
+        if (actorMethod instanceof AiActorMethod) {
+            game.pauseGame();
+        }
         redraw();
 
     }
@@ -147,6 +160,11 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
             pausedText.hide();
         }
         timerText.refresh();
+        if (game.getCurrentBoardState().getGameState() == GameState.O_WON || game.getCurrentBoardState().getGameState() == GameState.X_WON) {
+            wonGameOverlay.show(game.getCurrentBoardState());
+        } else {
+            wonGameOverlay.hide();
+        }
     }
 
 

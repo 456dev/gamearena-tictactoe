@@ -25,7 +25,7 @@ public class DeterministicRandomActorMethod extends AiActorMethod {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 seed = seed * 3;
-                seed += state.getTileState(i,j).ordinal();
+                seed += state.getTileState(i,j) == null ? 0 : state.getTileState(i,j).ordinal();
             }
         }
         return state.getValidMoves().get(seed % state.getValidMoves().size());

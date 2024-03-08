@@ -105,8 +105,8 @@ public class BoardState {
     private List<Move> calculateValidMoves() {
         List<Move> validMoves = new ArrayList<>(9);
 
-        for (int x = 0; x < 3; x++) {
-            for (int y = 0; y < 3; y++) {
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 3; x++) {
                 if (board[x][y] == null) {
                     validMoves.add(new Move(sideToMove, x, y, this));
                 }
@@ -138,10 +138,16 @@ public class BoardState {
             throw new IllegalArgumentException("Move is not valid");
         }
 
-        GameSide[][] backingList = board.clone();
-        backingList[move.x][move.y] = move.gameSide;
+        GameSide[][] side = new GameSide[3][3];
 
-        return new BoardState(backingList, move.gameSide == GameSide.X ? GameSide.O : GameSide.X);
+        // deep object clone
+        for (int i = 0; i < 3; i++) {
+            side[i] = board[i].clone();
+        }
+
+        side[move.x][move.y] = move.gameSide;
+
+        return new BoardState(side, move.gameSide == GameSide.X ? GameSide.O : GameSide.X);
     }
 
     public GameSide getTileState(int x, int y) {

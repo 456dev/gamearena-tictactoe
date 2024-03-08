@@ -29,6 +29,12 @@ public class PlayerSelectMenu {
     private final List<PlayerSelectItem> selectablePlayers = new ArrayList<>();
     private final JMenu aiDelayMenu;
 
+    public ActorTypeStore getActiveMethod() {
+        return activeMethod;
+    }
+
+    private ActorTypeStore activeMethod = ActorTypeStore.HUMAN;
+
     public PlayerSelectMenu(GameWindow window, GameSide side,
         Consumer<ActorMethod> actorMethodSetter) {
         this.window = window;
@@ -45,6 +51,7 @@ public class PlayerSelectMenu {
             menu.add(item.getMenuItem());
             item.getMenuItem().addActionListener(e -> {
                 // trust that its setup right.
+                this.activeMethod = item.getMethod();
                 actorMethodSetter.accept(item.getMethod().getActorMethod());
                 // larger scope, it needs to redraw the pause button
                 window.redraw();

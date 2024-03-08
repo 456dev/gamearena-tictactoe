@@ -15,6 +15,12 @@ public class TicTacToeGame {
     private final GameEventHandler gameEventHandler;
 
     public TicTacToeGame(GameEventHandler gameEventHandler) {
+        this(gameEventHandler, ActorTypeStore.HUMAN.getActorMethod(), ActorTypeStore.HUMAN.getActorMethod());
+    }
+
+    public TicTacToeGame(GameEventHandler gameEventHandler, ActorMethod player1, ActorMethod player2) {
+        this.player1.setActiveMethod(player1);
+        this.player2.setActiveMethod(player2);
         this.gameEventHandler = gameEventHandler;
     }
 

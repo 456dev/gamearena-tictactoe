@@ -10,13 +10,11 @@ import javax.swing.JMenuItem;
 public class MenuBar {
 
     private final JMenuBar menuBar;
-    private final GameWindow gameWindow;
     private final PauseGameActionButton pauseAction;
     private final PlayerSelectMenu XPlayerSelectMenu;
     private final PlayerSelectMenu OPlayerSelectMenu;
 
     public MenuBar(GameWindow gameWindow) {
-        this.gameWindow = gameWindow;
         menuBar = new JMenuBar();
 
         XPlayerSelectMenu = new PlayerSelectMenu(gameWindow, GameSide.X,
@@ -46,18 +44,26 @@ public class MenuBar {
 
         menuBar.add(actionsMenu);
 
-        JMenu debugMenu = new JMenu("Debug");
-
-        JMenuItem refreshAction = new JMenuItem("Redraw");
-        refreshAction.addActionListener(e -> gameWindow.redraw());
-        debugMenu.add(refreshAction);
-
-        menuBar.add(debugMenu);
+//        JMenu debugMenu = new JMenu("Debug");
+//
+//        JMenuItem refreshAction = new JMenuItem("Redraw");
+//        refreshAction.addActionListener(e -> gameWindow.redraw());
+//        debugMenu.add(refreshAction);
+//
+//        menuBar.add(debugMenu);
 
     }
 
     public JMenuBar getMenuBar() {
         return menuBar;
+    }
+
+    public PlayerSelectMenu getXPlayerSelectMenu() {
+        return XPlayerSelectMenu;
+    }
+
+    public PlayerSelectMenu getOPlayerSelectMenu() {
+        return OPlayerSelectMenu;
     }
 
     public void refresh() {
