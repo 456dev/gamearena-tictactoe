@@ -1,7 +1,5 @@
 package dev.the456gamer.gamearena.tictactoe.actortype;
 
-import dev.the456gamer.gamearena.tictactoe.TicTacToeGame;
-
 public abstract class AiActorMethod extends BaseActorMethod {
 
     private final String name;

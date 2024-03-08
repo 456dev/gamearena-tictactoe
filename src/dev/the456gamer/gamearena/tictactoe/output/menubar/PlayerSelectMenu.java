@@ -30,12 +30,8 @@ public class PlayerSelectMenu {
 
     private final List<PlayerSelectItem> selectablePlayers = new ArrayList<>();
     private final JMenu aiDelayMenu;
-
-    public ActorTypeStore getActiveMethod() {
-        return activeMethod;
-    }
-
     private ActorTypeStore activeMethod = ActorTypeStore.HUMAN;
+    private Actor actor;
 
     public PlayerSelectMenu(GameWindow window, GameSide side,
         Consumer<ActorMethod> actorMethodSetter) {
@@ -84,23 +80,12 @@ public class PlayerSelectMenu {
 
     }
 
+    public ActorTypeStore getActiveMethod() {
+        return activeMethod;
+    }
+
     public Actor getActor() {
         return actor;
-    }
-
-    private Actor actor;
-
-    public int getAiMoveDelay() {
-        return this.actor.getMoveDelay();
-    }
-
-    public void setAiMoveDelay(int delay) {
-        this.actor.setMoveDelay(delay);
-    }
-
-
-    public JMenu getMenu() {
-        return menu;
     }
 
     public void setActor(Actor actor) {
@@ -115,6 +100,18 @@ public class PlayerSelectMenu {
         this.actor.setActiveMethod(activeMethod);
         this.actor.setMoveDelay(moveDelay);
 
+    }
+
+    public int getAiMoveDelay() {
+        return this.actor.getMoveDelay();
+    }
+
+    public void setAiMoveDelay(int delay) {
+        this.actor.setMoveDelay(delay);
+    }
+
+    public JMenu getMenu() {
+        return menu;
     }
 
     public void refresh() {

@@ -5,18 +5,18 @@ import dev.the456gamer.gamearena.tictactoe.board.state.GameSide;
 
 public class Actor {
 
-    public GameSide getSide() {
-        return side;
-    }
+    private final GameSide side;
+    private ActorMethod activeMethod;
+    private int moveDelay = 100;
 
     public Actor(GameSide side, ActorMethod activeMethod) {
         this.side = side;
         this.activeMethod = activeMethod;
     }
 
-    private final GameSide side;
-    private ActorMethod activeMethod;
-    private int moveDelay = 100;
+    public GameSide getSide() {
+        return side;
+    }
 
     public ActorMethod getActiveMethod() {
         return activeMethod;

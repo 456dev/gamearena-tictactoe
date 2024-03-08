@@ -12,8 +12,9 @@ public class OMarker extends TileMarker {
 
     public OMarker(GameWindow gameWindow, int x, int y) {
         super(gameWindow, x, y);
-        circle1 = new Ball(340+50 + (110*x), 120+50 + (110*y), DIAMETER, "RED");
-        circle2 = new Ball(340+50 + (110*x), 120+50 + (110*y), DIAMETER - THICKNESS, "BLACK");
+        circle1 = new Ball(340 + 50 + (110 * x), 120 + 50 + (110 * y), DIAMETER, "RED");
+        circle2 = new Ball(340 + 50 + (110 * x), 120 + 50 + (110 * y), DIAMETER - THICKNESS,
+            "BLACK");
     }
 
     @Override

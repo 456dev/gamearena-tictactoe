@@ -15,10 +15,6 @@ public abstract class TileMarker {
         this.y = y;
     }
 
-    public abstract void addToBoard();
-
-    public abstract void removeFromBoard();
-
     public static TileMarker createMarker(GameSide gameSide, GameWindow gameWindow, int x, int y) {
         if (gameSide == GameSide.X) {
             return new XMarker(gameWindow, x, y);
@@ -26,4 +22,8 @@ public abstract class TileMarker {
             return new OMarker(gameWindow, x, y);
         }
     }
+
+    public abstract void addToBoard();
+
+    public abstract void removeFromBoard();
 }

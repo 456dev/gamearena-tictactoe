@@ -11,7 +11,7 @@ import uk.ac.lancaster.gamearena.Text;
 public class GameStateText {
 
     private final GameWindow window;
-    private Text text;
+    private final Text text;
 
 
     public GameStateText(GameWindow window) {
@@ -40,8 +40,6 @@ public class GameStateText {
                 break;
         }
 
-
-
         // center text by getting font render context with reflection hack
         Field graphics2dField = null;
         Graphics2D graphics2d;
@@ -52,8 +50,6 @@ public class GameStateText {
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
-
-
 
         Font font = new Font("SansSerif", Font.BOLD, text.getSize());
 

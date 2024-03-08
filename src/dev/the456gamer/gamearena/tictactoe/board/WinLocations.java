@@ -114,7 +114,7 @@ public enum WinLocations {
 
 
     public enum WinLocationType {
-        ROW, COLUMN, DIAGONAL;
+        ROW, COLUMN, DIAGONAL
     }
 
 

@@ -13,28 +13,29 @@ import java.time.Instant;
 public class TicTacToeGame {
 
     private final GameEventHandler gameEventHandler;
+    private final Actor player1 = new Actor(GameSide.X, ActorTypeStore.HUMAN.getActorMethod());
+    private final Actor player2 = new Actor(GameSide.O, ActorTypeStore.HUMAN.getActorMethod());
+    private BoardState currentBoardState = new BoardState();
+    private Instant lastUnpauseTime = Instant.now();
+    private Duration timeInGame = Duration.ZERO;
+    private boolean gamePaused = false;
 
     public TicTacToeGame(GameEventHandler gameEventHandler) {
-        this(gameEventHandler, ActorTypeStore.HUMAN.getActorMethod(), ActorTypeStore.HUMAN.getActorMethod());
+        this(gameEventHandler, ActorTypeStore.HUMAN.getActorMethod(),
+            ActorTypeStore.HUMAN.getActorMethod());
     }
 
-    public TicTacToeGame(GameEventHandler gameEventHandler, ActorMethod player1, ActorMethod player2) {
+
+    public TicTacToeGame(GameEventHandler gameEventHandler, ActorMethod player1,
+        ActorMethod player2) {
         this.player1.setActiveMethod(player1);
         this.player2.setActiveMethod(player2);
         this.gameEventHandler = gameEventHandler;
     }
 
-    private final Actor player1 = new Actor(GameSide.X, ActorTypeStore.HUMAN.getActorMethod());
-    private final Actor player2 = new Actor(GameSide.O, ActorTypeStore.HUMAN.getActorMethod());
-
-    private BoardState currentBoardState = new BoardState();
-
     public boolean isPlayer1Turn() {
         return getCurrentBoardState().getSideToMove() == GameSide.X;
     }
-
-    private Instant lastUnpauseTime = Instant.now();
-
 
     public Duration getTimeInGame() {
         if (gamePaused || inInitialState() || !isGameActive()) {
@@ -43,11 +44,6 @@ public class TicTacToeGame {
         Duration timeInGame = Duration.between(lastUnpauseTime, Instant.now());
         return this.timeInGame.plus(timeInGame);
     }
-
-    private Duration timeInGame = Duration.ZERO;
-
-
-    private boolean gamePaused = false;
 
     public Actor getCurrentPlayer() {
         return isPlayer1Turn() ? player1 : player2;

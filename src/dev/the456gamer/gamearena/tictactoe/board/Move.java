@@ -1,9 +1,10 @@
 package dev.the456gamer.gamearena.tictactoe.board;
 
-import dev.the456gamer.gamearena.tictactoe.board.state.GameSide;
 import dev.the456gamer.gamearena.tictactoe.board.state.BoardState;
+import dev.the456gamer.gamearena.tictactoe.board.state.GameSide;
 
 public class Move {
+
     public final GameSide gameSide;
     public final int x;
     public final int y;

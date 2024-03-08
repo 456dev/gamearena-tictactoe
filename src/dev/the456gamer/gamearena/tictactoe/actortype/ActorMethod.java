@@ -10,9 +10,9 @@ import java.util.concurrent.TimeoutException;
  */
 public interface ActorMethod {
 
-    public String getName();
+    String getName();
 
-    public String getTooltip();
+    String getTooltip();
 
     /**
      * Get the next move for the gameSide this shouldnt be called unless there is at least 1 valid
@@ -20,12 +20,11 @@ public interface ActorMethod {
      * <p>
      * This Method is blocking, should be a different thread or smth
      *
-     *
      * @param state the current state of the board
      * @return the next move for the gameSide
      */
-    public Move getNextMove(BoardState state) throws TimeoutException;
-    
+    Move getNextMove(BoardState state) throws TimeoutException;
+
 //    public Actor getBackingActor();
 
 

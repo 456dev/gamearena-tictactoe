@@ -160,7 +160,8 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
             pausedText.hide();
         }
         timerText.refresh();
-        if (game.getCurrentBoardState().getGameState() == GameState.O_WON || game.getCurrentBoardState().getGameState() == GameState.X_WON) {
+        if (game.getCurrentBoardState().getGameState() == GameState.O_WON
+            || game.getCurrentBoardState().getGameState() == GameState.X_WON) {
             wonGameOverlay.show(game.getCurrentBoardState());
         } else {
             wonGameOverlay.hide();

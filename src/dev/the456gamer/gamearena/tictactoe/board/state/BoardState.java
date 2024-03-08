@@ -9,13 +9,12 @@ import java.util.List;
 public class BoardState {
 
     private final GameSide sideToMove;
-    private GameState gameState;
     private final List<Move> validMoves = new ArrayList<>(9);
+    private final GameSide[][] board;
+    private GameState gameState;
     private boolean calculatedMoves = false;
     private WinLocations wonBoardPosition;
-
     private boolean inital = false;
-    private final GameSide[][] board;
 
     public BoardState() {
         this(new GameSide[3][3], GameSide.X);

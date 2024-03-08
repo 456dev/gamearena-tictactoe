@@ -11,14 +11,12 @@ import uk.ac.lancaster.gamearena.Rectangle;
 
 public class GameTile {
 
+    public final int windowXStart, windowYStart, windowXEnd, windowYEnd;
     private final GameWindow gameWindow;
     private final int x;
     private final int y;
     private final Rectangle clickTarget;
     private TileMarker marker;
-
-    public final int windowXStart, windowYStart, windowXEnd, windowYEnd;
-
     private GameSide gameSide;
 
     public GameTile(GameWindow gameWindow, int x, int y) {
@@ -35,6 +33,9 @@ public class GameTile {
         this.y = y;
     }
 
+    public GameSide getPlayer() {
+        return gameSide;
+    }
 
     public void setPlayer(GameSide gameSide) {
         if (this.marker != null) {
@@ -46,10 +47,6 @@ public class GameTile {
             this.marker = TileMarker.createMarker(gameSide, gameWindow, this.x, this.y);
             this.marker.addToBoard();
         }
-    }
-
-    public GameSide getPlayer() {
-        return gameSide;
     }
 
     public void onMouseClicked(MouseEvent e) {
@@ -85,8 +82,6 @@ public class GameTile {
 
         human.makeMove(x, y);
     }
-
-    // change displayed
 
 
 }
