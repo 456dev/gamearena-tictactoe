@@ -12,10 +12,10 @@ public class GameGrid {
     // single instance, has the 4 hatch lines #
     // also stores the tiles?
 
-    private final Line[] hatchLines = new Line[4];
     private final GameTile[][] tiles = new GameTile[3][3];
 
     public GameGrid(GameWindow gameWindow) {
+        Line[] hatchLines = new Line[4];
         for (int i = 0; i < 2; i++) {
             hatchLines[i] = new Line(340, 225 + (110 * i), 660, 225 + (110 * i), THICKNESS,
                 "WHITE");
@@ -46,15 +46,9 @@ public class GameGrid {
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
                 GameSide tileState = boardState.getTileState(x, y);
-//                if (tileState == null) {
-//                    System.out.print(" ");
-//                } else {
-//                    System.out.print(tileState.getSymbol());
-//                }
 
                 tiles[x][y].setPlayer(tileState);
             }
-//            System.out.println();
         }
 
     }

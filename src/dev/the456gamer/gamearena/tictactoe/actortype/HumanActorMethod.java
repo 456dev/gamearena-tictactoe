@@ -62,11 +62,11 @@ public class HumanActorMethod extends BaseActorMethod {
     // needs to support waiting for that event handler for long periods of time
 
     /**
-     * Contextless function designed to be called from another thread (event handler) so that
+     * Context-less function designed to be called from another thread (event handler) so that
      * getNextMove can return.
      *
-     * @param x xpos of the grid to move to
-     * @param y ypos of the grid to move to
+     * @param x x Pos of the grid to move to
+     * @param y y Pos of the grid to move to
      */
     public void makeMove(int x, int y) {
 //        System.out.println("human move request to (%d,%d)".formatted(x,y));

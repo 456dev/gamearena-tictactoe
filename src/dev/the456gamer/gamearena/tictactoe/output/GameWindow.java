@@ -73,7 +73,7 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
 
         resetGame();
 
-        // final refresh to finish updating layout (font context isn't available until after first a couple of draws?
+        // final refresh to finish updating layout (font context isn't available until after first a couple of draws?)
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -82,24 +82,18 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
                 redraw();
             }
         }, 50);
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                timerText.refresh();
-            }
-        }, 100, 55);
 
     }
 
 
     public void startPlaying() {
-        // take input from _current_ player -> can be swapped mid game
+        // take input from _current_ player -> can be swapped mid-game
 
         while (true) { // todo quit without this?
             // ensure latest game state: resetting = new game.
             TicTacToeGame game = this.getGame();
 
-            if (game.isGamePaused() || !game.isGameActive()) {
+            if (game.isGamePaused() || game.isGameEnded()) {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -108,7 +102,7 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
                 continue;
             }
 
-            // ensure currentplayer and active method stay the same after the thread sleep
+            // ensure current player and active method stay the same after the thread sleep
             ActorMethod activeMethod = game.getCurrentPlayer().getActiveMethod();
             if (activeMethod instanceof AiActorMethod) {
                 try {
@@ -135,9 +129,6 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
      * resets the game to a new game
      */
     public void resetGame() {
-        // TODO this doesnt reset actors -> it should default to human, but instead is current selection
-        //  (good) but doesnt pause (bad?)
-        //  dev.the456gamer.gamearena.tictactoe.output.menubar.PlayerSelectMenu.setActor -> happens in refresh, which is too late.
         ActorMethod actorMethod = menuBar.getXPlayerSelectMenu().getActiveMethod().getActorMethod();
         game = new TicTacToeGame(this,
             actorMethod,

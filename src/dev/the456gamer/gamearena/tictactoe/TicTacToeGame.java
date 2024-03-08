@@ -38,7 +38,7 @@ public class TicTacToeGame {
     }
 
     public Duration getTimeInGame() {
-        if (gamePaused || inInitialState() || !isGameActive()) {
+        if (gamePaused || inInitialState() || isGameEnded()) {
             return timeInGame;
         }
         Duration timeInGame = Duration.between(lastUnpauseTime, Instant.now());
@@ -50,7 +50,7 @@ public class TicTacToeGame {
     }
 
     public void pauseGame() {
-        if (!isGameActive()) {
+        if (isGameEnded()) {
             // game is over, no need to pause
             return;
         }
@@ -81,8 +81,8 @@ public class TicTacToeGame {
         return gamePaused;
     }
 
-    public boolean isGameActive() {
-        return !(currentBoardState.isTerminal());
+    public boolean isGameEnded() {
+        return currentBoardState.isTerminal();
     }
 
 
@@ -131,7 +131,7 @@ public class TicTacToeGame {
     }
 
     public void move(Move move) {
-        if (isGamePaused() || !isGameActive()) {
+        if (isGamePaused() || isGameEnded()) {
             return;
         }
 
@@ -146,7 +146,7 @@ public class TicTacToeGame {
             gameEventHandler.onFirstMove(this);
             lastUnpauseTime = Instant.now();
         }
-        if (!isGameActive()) {
+        if (isGameEnded()) {
             storeTime();
             gameEventHandler.onGameEnd(this);
         }

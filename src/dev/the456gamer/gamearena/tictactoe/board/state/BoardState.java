@@ -14,11 +14,11 @@ public class BoardState {
     private GameState gameState;
     private boolean calculatedMoves = false;
     private WinLocations wonBoardPosition;
-    private boolean inital = false;
+    private boolean initial = false;
 
     public BoardState() {
         this(new GameSide[3][3], GameSide.X);
-        inital = true;
+        initial = true;
     }
 
     private BoardState(GameSide[][] backingList, GameSide sideToMove) {
@@ -35,7 +35,7 @@ public class BoardState {
     }
 
     private GameState calculateGameState() {
-        if (inital) {
+        if (initial) {
             return GameState.INITIAL;
         }
 
@@ -85,7 +85,7 @@ public class BoardState {
         }
 
         if (boardEmpty) {
-            inital = true;
+            initial = true;
             return GameState.INITIAL;
         }
 

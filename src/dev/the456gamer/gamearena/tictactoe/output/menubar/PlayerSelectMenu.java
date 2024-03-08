@@ -19,7 +19,7 @@ import javax.swing.JRadioButtonMenuItem;
  * a menu for selecting how a gameSide is controlled 2 instances of this should be created, one for
  * each game gameSide
  * <p>
- * should allow selecting between each class type show id, hover text config ai move delay
+ * should allow selecting between each class type show id, hover text config AI move delay
  */
 // symbol pair? ⭕❌
 public class PlayerSelectMenu {
@@ -38,7 +38,7 @@ public class PlayerSelectMenu {
         this.window = window;
         this.side = side;
         // only null until first update, then never after (hopefully)
-        // since its linked to game (to set the settings), it cant be pre-set.
+        // since It's linked to game (to set the settings), it cant be pre-set.
         this.actor = null;
         menu = new JMenu("Player: tmp");
 

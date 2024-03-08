@@ -13,8 +13,8 @@ public class PausedText {
     // flashes opacity every 1 second.
 
     private final Text text;
-    Timer timer;
-    TimerTask task;
+    private final Timer timer;
+    private TimerTask task;
 
 
     public PausedText(GameWindow gameWindow) {

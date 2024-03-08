@@ -15,10 +15,10 @@ public interface ActorMethod {
     String getTooltip();
 
     /**
-     * Get the next move for the gameSide this shouldnt be called unless there is at least 1 valid
+     * Get the next move for the gameSide this shouldn't be called unless there is at least 1 valid
      * move.
      * <p>
-     * This Method is blocking, should be a different thread or smth
+     * This Method is blocking, should be a different thread or something
      *
      * @param state the current state of the board
      * @return the next move for the gameSide

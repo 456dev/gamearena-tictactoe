@@ -26,7 +26,7 @@ public class Actor {
         this.activeMethod = activeMethod;
     }
 
-    // only used for AI actors, but its set on a player side level.
+    // only used for AI actors, but it's set on a player side level.
     public int getMoveDelay() {
         return moveDelay;
     }

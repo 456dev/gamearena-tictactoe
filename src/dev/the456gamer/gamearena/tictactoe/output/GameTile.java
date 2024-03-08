@@ -15,7 +15,6 @@ public class GameTile {
     private final GameWindow gameWindow;
     private final int x;
     private final int y;
-    private final Rectangle clickTarget;
     private TileMarker marker;
     private GameSide gameSide;
 
@@ -25,7 +24,8 @@ public class GameTile {
         windowYStart = 120 + (110 * y);
         windowXEnd = windowXStart + 100;
         windowYEnd = windowYStart + 100;
-        clickTarget = new Rectangle(340 + (110 * x), 120 + (110 * y), 100, 100, "BLACK");
+        // probably not needed but allowed for debugging by changing bg colour
+        Rectangle clickTarget = new Rectangle(340 + (110 * x), 120 + (110 * y), 100, 100, "BLACK");
         gameWindow.arena.addRectangle(clickTarget);
 
         this.gameWindow = gameWindow;
@@ -51,8 +51,8 @@ public class GameTile {
 
     public void onMouseClicked(MouseEvent e) {
 
-        int onmask = SHIFT_DOWN_MASK;
-        if (((e.getModifiersEx() & (onmask | CTRL_DOWN_MASK)) == onmask)) {
+        int onMask = SHIFT_DOWN_MASK;
+        if (((e.getModifiersEx() & (onMask | CTRL_DOWN_MASK)) == onMask)) {
             if (e.getButton() == 1) {
                 if (getPlayer() != GameSide.X) {
                     setPlayer(GameSide.X);
@@ -65,7 +65,7 @@ public class GameTile {
             return;
         }
 
-        if (!gameWindow.getGame().isGameActive() || gameWindow.getGame().isGamePaused()) {
+        if (gameWindow.getGame().isGameEnded() || gameWindow.getGame().isGamePaused()) {
             System.out.println("ignoring click: Game is not active or is paused");
             return;
         }

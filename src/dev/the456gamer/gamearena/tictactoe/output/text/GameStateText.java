@@ -16,7 +16,7 @@ public class GameStateText {
 
     public GameStateText(GameWindow window) {
         this.window = window;
-        // just needs to be good enough that its hard to see it shifting on first update as it centers itself.
+        // just needs to be good enough that it's hard to see it shifting on first update as it centers itself.
         this.text = new Text("tmp", 25, 425, 60, "WHITE");
         window.arena.addText(text);
     }
@@ -41,7 +41,7 @@ public class GameStateText {
         }
 
         // center text by getting font render context with reflection hack
-        Field graphics2dField = null;
+        Field graphics2dField;
         Graphics2D graphics2d;
         try {
             graphics2dField = GameArena.class.getDeclaredField("graphics");
