@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="GameArena">
-    <CLASSES />
-    <JAVADOC />
-    <SOURCES>
-      <root url="file://$PROJECT_DIR$/libsrc/GameArena" />
-    </SOURCES>
-  </library>
-</component>

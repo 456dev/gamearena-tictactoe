@@ -79,9 +79,17 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+//                System.out.printf("timer run");
                 redraw();
             }
         }, 50);
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                timerText.refresh();
+            }
+        }, 100, 55);
 
     }
 
@@ -122,6 +130,7 @@ public class GameWindow implements GameEventHandler, CustomArenaEvents {
             }
             game.move(move);
             redraw();
+
         }
     }
 

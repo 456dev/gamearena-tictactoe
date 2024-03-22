@@ -3,7 +3,6 @@
     <output-path>$PROJECT_DIR$/out/artifacts/gamearena_tictactoe_jar</output-path>
     <root id="archive" name="gamearena-tictactoe.jar">
       <element id="module-output" name="gamearena-tictactoe" />
-      <element id="module-output" name="GameArena" />
     </root>
   </artifact>
 </component>

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/libsrc/GameArena/GameArena.iml" filepath="$PROJECT_DIR$/libsrc/GameArena/GameArena.iml" />
       <module fileurl="file://$PROJECT_DIR$/gamearena-tictactoe.iml" filepath="$PROJECT_DIR$/gamearena-tictactoe.iml" />
     </modules>
   </component>
